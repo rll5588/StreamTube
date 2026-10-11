@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Stream Tube | Find your next watch</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="#home"><span class="brand-icon">▶</span> Stream<span>Tube</span></a>
+    <p class="side-label">DISCOVER</p>
+    <nav aria-label="Main navigation">
+      <a href="#home" data-page="home">⌕ &nbsp; Explore</a>
+      <a href="#services" data-page="services">▦ &nbsp; My services</a>
+      <a href="#watchlist" data-page="watchlist">♡ &nbsp; Watchlist</a>
+      <a href="#account" data-page="account">♙ &nbsp; Account</a>
+    </nav>
+    <div class="sidebar-bottom"><div class="status-dot"></div> Interactive demo <small>Local prototype · no provider passwords</small></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="mobile-brand">▶ StreamTube</div>
+      <div class="top-hint">YOUR STREAMING, SIMPLIFIED</div>
+      <div id="auth-actions" class="auth-actions">
+        <button class="auth-link" data-open-auth="signin">Sign in</button>
+        <button class="auth-create" data-open-auth="create">Create account</button>
+      </div>
+      <button id="user-menu" class="user-menu" hidden title="Open account"><span id="avatar" class="avatar">ST</span><span id="user-menu-name"></span></button>
+    </header>
+
+    <section id="home" class="page">
+      <div class="hero">
+        <div class="eyebrow">ONE SEARCH. EVERY STREAM.</div>
+        <h1>Less searching.<br><em>More watching.</em></h1>
+        <p>Find movies and shows across the streaming services you already pay for.</p>
+        <form id="search-form" class="search">
+          <input id="query" aria-label="Search movies or shows" placeholder="Search a movie or TV show..." autocomplete="off">
+          <button type="submit">Find a show →</button>
+        </form>
+        <div class="hero-caption">Choose your services, search once, and see where to watch.</div>
+      </div>
+      <div class="section-head"><div><p class="eyebrow">DISCOVER</p><h2 id="results-heading">Popular right now</h2></div><button class="text-button" id="clear-search" hidden>Clear search</button></div>
+      <div id="results" class="cards" aria-live="polite"></div>
+    </section>
+
+    <section id="services" class="page" hidden>
+      <div class="page-heading"><p class="eyebrow">PERSONALIZE YOUR SEARCH</p><h1>My streaming services</h1><p>Pick the subscriptions you have. We'll prioritize titles available to you.</p></div>
+      <div class="section-head"><h2>Choose your platforms</h2><span id="service-count" class="pill"></span></div>
+      <div id="service-grid" class="service-grid"></div>
+      <div class="note">Your selections are saved locally in this browser. Stream Tube never asks for your streaming-provider passwords.</div>
+      <div class="section-head"><div><p class="eyebrow">ACCOUNT CONNECTIONS</p><h2>Connect your streaming accounts</h2></div></div>
+      <p class="small-muted">Select a service above, then manage its connection below. In this prototype, verification is simulated so the interface can be tested safely.</p>
+      <div id="connection-grid" class="connection-grid"></div>
+      <button id="services-done" class="primary">Explore titles →</button>
+    </section>
+
+    <section id="watchlist" class="page" hidden>
+      <div class="page-heading"><p class="eyebrow">SAVE FOR LATER</p><h1>My watchlist</h1><p>Keep interesting titles in one place.</p></div>
+      <div id="watchlist-results" class="cards"></div>
+    </section>
+
+    <section id="account" class="page" hidden>
+      <div class="page-heading"><p class="eyebrow">YOUR STREAM TUBE</p><h1>Account</h1><p>Manage your profile and keep your Stream Tube preferences together.</p></div>
+      <div id="signed-out-account" class="account-callout">
+        <div><p class="eyebrow">WELCOME</p><h2>Create your Stream Tube account</h2><p>Save your profile, selected services, and watchlist in this browser prototype.</p></div>
+        <div class="account-callout-actions"><button class="primary" data-open-auth="create">Create account</button><button class="secondary" data-open-auth="signin">Sign in</button></div>
+      </div>
+      <div id="signed-in-account" hidden>
+        <div class="profile-card">
+          <div id="profile-avatar" class="profile-avatar">ST</div>
+          <div class="profile-main"><p class="eyebrow">SIGNED IN</p><h2 id="profile-name">Stream Tube User</h2><p id="profile-email" class="profile-email"></p><p id="profile-username" class="meta"></p></div>
+          <button id="sign-out" class="secondary danger">Sign out</button>
+        </div>
+        <div class="account-stats">
+          <div><strong id="profile-services">0</strong><span>Selected services</span></div>
+          <div><strong id="profile-verified">0</strong><span>Verified services</span></div>
+          <div><strong id="profile-watchlist">0</strong><span>Watchlist titles</span></div>
+        </div>
+        <div class="section-head"><div><p class="eyebrow">STREAMING ACCOUNTS</p><h2>Manage connections</h2></div><button id="manage-connections" class="secondary">Manage services</button></div>
+        <div id="account-connection-grid" class="connection-grid"></div>
+        <div class="account-note"><strong>Prototype note:</strong> Version 3 stores account and connection-status data locally for interface testing. Streaming-provider verification is simulated until an approved provider authorization API is available. Stream Tube does not collect provider passwords.</div>
+      </div>
+    </section>
+
+    <footer>Stream Tube · UI prototype v3 · Availability and titles are illustrative, not live.</footer>
+  </main>
+</div>
+
+<dialog id="details"><button class="close" id="close-details" aria-label="Close">✕</button><div id="details-body"></div></dialog>
+
+<dialog id="auth-dialog" class="auth-dialog">
+  <button class="close" id="close-auth" aria-label="Close">✕</button>
+  <div class="auth-tabs"><button id="signin-tab" class="active">Sign in</button><button id="create-tab">Create account</button></div>
+
+  <form id="signin-form" class="auth-form" novalidate>
+    <p class="eyebrow">WELCOME BACK</p><h2>Sign in to Stream Tube</h2><p class="form-intro">Use the account you created in this browser.</p>
+    <label>Email or username<input id="signin-id" autocomplete="username" required><span class="field-error" id="signin-id-error"></span></label>
+    <label>Password<input id="signin-password" type="password" autocomplete="current-password" required><span class="field-error" id="signin-password-error"></span></label>
+    <div id="signin-error" class="form-error"></div>
+    <button class="primary auth-submit" type="submit">Sign in →</button>
+  </form>
+
+  <form id="create-form" class="auth-form" hidden novalidate>
+    <p class="eyebrow">JOIN STREAM TUBE</p><h2>Create your account</h2><p class="form-intro">Set up a profile for this prototype.</p>
+    <div class="two-col">
+      <label>First name<input id="first-name" autocomplete="given-name" required><span class="field-error" id="first-name-error"></span></label>
+      <label>Last name<input id="last-name" autocomplete="family-name" required><span class="field-error" id="last-name-error"></span></label>
+    </div>
+    <label>Email<input id="create-email" type="email" autocomplete="email" required><span class="field-error" id="create-email-error"></span></label>
+    <label>Username<input id="create-username" autocomplete="username" required><span class="field-error" id="create-username-error"></span></label>
+    <label>Password<input id="create-password" type="password" autocomplete="new-password" required><span class="field-error" id="create-password-error"></span></label>
+    <label>Confirm password<input id="confirm-password" type="password" autocomplete="new-password" required><span class="field-error" id="confirm-password-error"></span></label>
+    <div id="create-error" class="form-error"></div>
+    <button class="primary auth-submit" type="submit">Create account →</button>
+    <p class="prototype-warning">Demo only: do not use a real password. Production authentication will be handled securely on the server.</p>
+  </form>
+</dialog>
+
+<dialog id="connect-dialog" class="auth-dialog">
+  <button class="close" id="close-connect" aria-label="Close">✕</button>
+  <div id="connect-body"></div>
+</dialog>
+
+<script src="js/app.js"></script>
+</body></html>

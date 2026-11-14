@@ -1,0 +1,16 @@
+{
+  "name": "stream-tube-netflix-api",
+  "version": "8.9.0",
+  "private": true,
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "node tests/v89_integration.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

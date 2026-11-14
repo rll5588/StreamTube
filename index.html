@@ -15,6 +15,7 @@
       <a href="#home" data-page="home">⌕ &nbsp; Explore</a>
       <a href="#services" data-page="services">▦ &nbsp; My services</a>
       <a href="#watchlist" data-page="watchlist">♡ &nbsp; Watchlist</a>
+      <a href="#history" data-page="history">◷ &nbsp; Watch history</a>
       <a href="#account" data-page="account">♙ &nbsp; Account</a>
     </nav>
     <div class="sidebar-bottom"><div class="status-dot"></div> Interactive demo <small>Local prototype · no provider passwords</small></div>
@@ -33,7 +34,7 @@
 
     <section id="home" class="page">
       <div class="hero">
-        <div class="eyebrow">ONE SEARCH. EVERY STREAM.</div>
+        <div class="eyebrow">ONE SEARCH. YOUR STREAMS.</div>
         <h1>Less searching.<br><em>More watching.</em></h1>
         <p>Find movies and shows across the streaming services you already pay for.</p>
         <form id="search-form" class="search">
@@ -43,7 +44,10 @@
         <div class="hero-caption">Choose your services, search once, and see where to watch.</div>
       </div>
       <div class="section-head"><div><p class="eyebrow">DISCOVER</p><h2 id="results-heading">Popular right now</h2></div><button class="text-button" id="clear-search" hidden>Clear search</button></div>
-      <div id="results" class="cards" aria-live="polite"></div>
+      <p id="netflix-live-status" role="status" aria-live="polite"></p><div id="netflix-live-results" class="cards" aria-live="polite" hidden></div><div id="results" class="cards" aria-live="polite"></div>
+      <div class="section-head"><div><p class="eyebrow">PICKED FOR YOU</p><h2>Recommended for You</h2></div><a href="#history" class="text-button">Manage watch history</a></div>
+      <p class="small-muted" id="recommendation-explanation">Real Watchmode recommendations based on your watch history and selected streaming services.</p>
+      <div id="recommendation-results" class="recommendation-groups" aria-live="polite"></div>
     </section>
 
     <section id="services" class="page" hidden>
@@ -57,6 +61,11 @@
       <button id="services-done" class="primary">Explore titles →</button>
     </section>
 
+    <section id="history" class="page" hidden>
+      <div class="page-heading"><p class="eyebrow">YOUR WATCHING PROFILE</p><h1>Watch history</h1><p>Mark titles watched to personalize your recommendations. Your history stays in this browser.</p></div>
+      <div class="section-head"><h2>Previously watched</h2><button id="clear-history" class="secondary">Clear watch history</button></div>
+      <div id="history-results" class="history-list"></div>
+    </section>
     <section id="watchlist" class="page" hidden>
       <div class="page-heading"><p class="eyebrow">SAVE FOR LATER</p><h1>My watchlist</h1><p>Keep interesting titles in one place.</p></div>
       <div id="watchlist-results" class="cards"></div>
@@ -81,11 +90,11 @@
         </div>
         <div class="section-head"><div><p class="eyebrow">STREAMING ACCOUNTS</p><h2>Manage connections</h2></div><button id="manage-connections" class="secondary">Manage services</button></div>
         <div id="account-connection-grid" class="connection-grid"></div>
-        <div class="account-note"><strong>Prototype note:</strong> Version 3 stores account and connection-status data locally for interface testing. Streaming-provider verification is simulated until an approved provider authorization API is available. Stream Tube does not collect provider passwords.</div>
+        <div class="account-note"><strong>Prototype note:</strong> Account authentication is handled by this local server; service connection status remains a prototype simulation. Streaming-provider verification is simulated until an approved provider authorization API is available. Stream Tube does not collect provider passwords.</div>
       </div>
     </section>
 
-    <footer>Stream Tube · UI prototype v3 · Availability and titles are illustrative, not live.</footer>
+    <footer>Stream Tube · v8 · Live Watchmode US search · Demo accounts and verification are simulated.</footer>
   </main>
 </div>
 
@@ -110,12 +119,13 @@
       <label>Last name<input id="last-name" autocomplete="family-name" required><span class="field-error" id="last-name-error"></span></label>
     </div>
     <label>Email<input id="create-email" type="email" autocomplete="email" required><span class="field-error" id="create-email-error"></span></label>
-    <label>Username<input id="create-username" autocomplete="username" required><span class="field-error" id="create-username-error"></span></label>
-    <label>Password<input id="create-password" type="password" autocomplete="new-password" required><span class="field-error" id="create-password-error"></span></label>
+    <label>Username<input id="create-username" autocomplete="username" minlength="4" maxlength="24" pattern="[A-Za-z][A-Za-z0-9_]{3,23}" title="Start with a letter; 4–24 letters, numbers or underscores" required><span class="field-error" id="create-username-error"></span></label>
+    <label>Password<input id="create-password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required><span class="field-error" id="create-password-error"></span></label>
     <label>Confirm password<input id="confirm-password" type="password" autocomplete="new-password" required><span class="field-error" id="confirm-password-error"></span></label>
     <div id="create-error" class="form-error"></div>
     <button class="primary auth-submit" type="submit">Create account →</button>
-    <p class="prototype-warning">Demo only: do not use a real password. Production authentication will be handled securely on the server.</p>
+    <p class="prototype-warning">Username: 4–24 characters, start with a letter, letters/numbers/underscores only, no double underscores. Password: 12–128 characters, no common passwords, control characters, or username/email name. Long passphrases are welcome.</p>
+    <p class="prototype-warning">Local prototype: accounts are stored on this server. Use a unique test password; production deployment requires additional security review.</p>
   </form>
 </dialog>
 
@@ -125,4 +135,6 @@
 </dialog>
 
 <script src="js/app.js"></script>
+<script src="js/netflix-api.js"></script>
+<script src="js/recommendations.js"></script>
 </body></html>
